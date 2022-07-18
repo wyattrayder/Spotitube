@@ -1,4 +1,15 @@
-# spotitube-vue-test
+# spotitube
+
+## Project Description
+```
+This is an application that will allow a user to convert their Youtube playlists 
+into Spotify playlists, or vice versa.
+```
+
+## Project Prerequisties
+```
+Download nodejs https://nodejs.org/en/download/
+```
 
 ## Project setup
 ```
