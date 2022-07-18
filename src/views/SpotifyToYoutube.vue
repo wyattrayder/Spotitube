@@ -57,11 +57,12 @@
               v-bind:key="playlist.name"
               class="playlistBoxes"
             >
-              <img
+              <v-img
                 class="media-object"
                 width="150"
                 :src="`${playlist.images[0].url}`"
-              /><v-spacer></v-spacer>
+              ></v-img
+              ><v-spacer></v-spacer>
               {{ playlist.name }}
             </v-col>
           </v-row>
@@ -72,6 +73,7 @@
 </template>
 
 <script>
+import spotifyApi from "../apis/spotify.api";
 export default {
   data: () => ({
     user: null,
@@ -85,40 +87,17 @@ export default {
       var access_token = params.access_token;
 
       if (access_token) {
-        var info = await this.getUserInfo(access_token);
+        var info = await spotifyApi.getUserInfo(access_token);
         this.user = info;
-        var playlists = await this.getUserPlaylists(access_token, info.id);
+        var playlists = await spotifyApi.getUserPlaylists(
+          access_token,
+          info.id
+        );
         this.playlists = playlists;
         this.loggedIn = true;
       } else {
         console.log("Could not login, no access token");
       }
-    },
-    //this method should go in a separate api file -- need to check my code at work to for reference
-    async getUserInfo(access_token) {
-      var url = "https://api.spotify.com/v1/me";
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token,
-        },
-      });
-      return response.json();
-    },
-    //this method should go in a separate api file -- need to check my code at work to for reference
-    async getUserPlaylists(access_token, user_id) {
-      var url = `https://api.spotify.com/v1/users/${user_id}/playlists?limit=10`;
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token,
-        },
-      });
-      return response.json();
     },
     loginToSpotify() {
       var stateKey = "spotify_auth_state";
@@ -132,7 +111,6 @@ export default {
         has been successfully authorized and granted
         an authorization code or access token
       */
-      
 
       var generatedString = this.generateRandomString(16);
 
