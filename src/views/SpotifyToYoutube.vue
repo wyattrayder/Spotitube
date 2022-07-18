@@ -124,7 +124,8 @@ export default {
       var stateKey = "spotify_auth_state";
 
       // I got these by registering an app at https://developer.spotify.com/dashboard/applications
-      var client_id = "55fa7dbdd157441f9de6dd00c10e6f89"; // Your client id
+      // var client_id = "55fa7dbdd157441f9de6dd00c10e6f89"; // Your client id
+      var client_id = "9e60ad835d48483cb27cc6d70b37e828";
       var redirect_uri = "http://localhost:8080/spotify"; // Your redirect uri
       /* 
         A redirect uri is the location where the 
