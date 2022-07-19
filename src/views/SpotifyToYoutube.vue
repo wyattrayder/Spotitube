@@ -20,14 +20,11 @@
                   v-if="`${this.user.images.length}` > 0"
                 />
                 <v-img
-                class="media-object"
-                width="150"
-                src="../assets/def_prof_pic.png"
-                v-else
-
-
-
-              ></v-img>
+                  class="media-object"
+                  width="150"
+                  src="../assets/def_prof_pic.png"
+                  v-else
+                ></v-img>
               </div>
             </v-col>
             <v-col cols="5">
@@ -67,23 +64,44 @@
               v-bind:key="playlist.name"
               class="playlistBoxes"
             >
-              <v-img
-                class="media-object"
-                width="150"
-                :src="`${playlist.images[0].url}`"
-                v-if="`${playlist.images.length}` > 0"
-              ></v-img>
+              <v-hover v-slot="{ hover }">
+                <v-img
+                  class="playlistImages"
+                  width="150"
+                  :src="`${playlist.images[0].url}`"
+                  v-if="`${playlist.images.length}` > 0"
+                >
+                  <v-expand-transition>
+                    <div
+                      v-if="hover"
+                      class="
+                        d-flex
+                        transition-fast-in-fast-out
+                        green
+                        v-card--reveal
+                        white--text
+                      "
+                      style="height: 100%"
+                    >
+                      <v-btn
+                        rounded
+                        raised
+                        class="convertButton"
+                        @click="convertPlaylist(playlist)"
+                        >Convert!</v-btn
+                      >
+                    </div>
+                  </v-expand-transition></v-img
+                >
 
-              <v-img
-                class="media-object"
-                width="150"
-                src="../assets/vinyl.jpg"
-                v-else
+                <v-img
+                  class="playlistImages"
+                  width="150"
+                  src="../assets/vinyl.jpg"
+                  v-else
+                ></v-img>
+              </v-hover>
 
-
-
-              ></v-img>
-              
               <v-spacer></v-spacer>
               {{ playlist.name }}
             </v-col>
@@ -94,6 +112,7 @@
   </div>
 </template>
 
+<script src="https://accounts.google.com/js/api.js" async defer></script>
 <script>
 import spotifyApi from "../apis/spotify.api";
 export default {
@@ -101,8 +120,6 @@ export default {
     user: null,
     playlists: null,
     loggedIn: false,
-    // hasProfImg: true,
-
   }),
   components: {},
   methods: {
@@ -122,7 +139,7 @@ export default {
       } else {
         console.log("Could not login, no access token");
       }
-      console.log(playlists)
+      console.log(playlists);
     },
     loginToSpotify() {
       var stateKey = "spotify_auth_state";
@@ -149,10 +166,14 @@ export default {
       url += "&scope=" + encodeURIComponent(scope);
       url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
       url += "&state=" + encodeURIComponent(generatedString);
-      // console.log(playlists)
+
       window.location = url;
 
       this.getSpotifyInfo();
+    },
+    convertPlaylist(playlist) {
+      console.log("Clicked Playlist: ");
+      console.log(playlist);
     },
     generateRandomString(length) {
       var text = "";
@@ -174,20 +195,9 @@ export default {
       }
       return hashParams;
     },
+    loginToYoutube() {
 
-    // checkForPicture(info){
-    // if(this.user.images[0].url != null){
-
-    // hasProfImg = true;
-      
-    // }
-    // else{
-    //   hasProfImg = false;
-    // }
-
-
-    // }
-
+    }
   },
   mounted() {
     this.getSpotifyInfo();
@@ -201,5 +211,11 @@ export default {
 }
 .playlistBoxes {
   text-align: center;
+}
+.playlistImages {
+  margin: auto;
+}
+.convertButton {
+  margin: auto;
 }
 </style>
