@@ -80,6 +80,7 @@ methods:{
     },
 
 // EVERYTHING BELOW THIS IS FROM DEVELOPERS.GOOGLE.COM!
+// https://console.cloud.google.com/apis/dashboard
 
       loadClient() {
     gapi.client.setApiKey("AIzaSyCljyGykLH8i7zJsljdA4ycCHso4FCDdmQ");
@@ -123,6 +124,7 @@ getLink(){
 }}; // end of export default
 // AIzaSyCljyGykLH8i7zJsljdA4ycCHso4FCDdmQ - API key
 // 352942451792-fvfoas989dlp93hd2jm3mim9689egfgs.apps.googleusercontent.com -> my OAuth
+// I deleted my OAuth for now
 // My channel ID is UCYauaCT2lnnv4D8WMNi5zig if you want to test using that
 // console.log('test');
 
