@@ -1,13 +1,23 @@
 <template>
   <div>
     <v-container>
-      <!-- Login button, show if not logged in-->
-      <v-btn v-if="!loggedIn" rounded color="green" @click="loginToSpotify"
-        >Login</v-btn
-      >
+      <v-row v-if="!loggedIn" align="center"> 
+        <v-col cols="6" class="YorSbutton" @click="goBack">
+
+          <v-btn rounded color="grey"> Go Back </v-btn>
+        </v-col>
+
+          <!-- Login button, show if not logged in-->
+          <v-col cols="6" class="YorSbutton" @click="loginToSpotify">
+            <v-btn rounded color="green"> Login </v-btn>
+          </v-col>
+        
+
+      </v-row>
 
       <!-- Show this info if logged in (name, spotify info, and playlists)-->
       <div v-if="loggedIn" id="userInfo">
+        <v-btn rounded color="grey" @click="goBack"> Go Back </v-btn>
         <h1>Logged in as {{ user.display_name }}</h1>
         <div class="media">
           <v-row>
@@ -76,11 +86,11 @@
                       v-if="hover"
                       class="
                         d-flex
-                        transition-fast-in-fast-out
+                        transition-fast-in-fast-out 
                         green
                         v-card--reveal
                         white--text
-                      "
+                      " 
                       style="height: 100%"
                     >
                       <v-btn
@@ -123,6 +133,13 @@ export default {
   }),
   components: {},
   methods: {
+
+    goBack(){
+      this.$router.push('/')
+
+
+    },
+
     async getSpotifyInfo() {
       var params = this.getHashParams();
       var access_token = params.access_token;

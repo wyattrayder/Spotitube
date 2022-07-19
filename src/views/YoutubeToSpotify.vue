@@ -4,11 +4,11 @@
       <v-row align="center">
 
         <v-col cols="6" class="YorSbutton" @click="goBack">
-          <v-btn>Go Back</v-btn>
+          <v-btn rounded color="grey">Go Back</v-btn>
         </v-col>
 
         <v-col cols="6" class="YorSbutton" @click="authenticate">
-          <v-btn v-if="!loggdIn" rounded color="orange">Login</v-btn>
+          <v-btn v-if="!loggdIn" rounded color="red">Login</v-btn>
         </v-col>
 
 
