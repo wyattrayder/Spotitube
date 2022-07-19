@@ -17,7 +17,17 @@
                   class="media-object"
                   width="150"
                   :src="`${this.user.images[0].url}`"
+                  v-if="`${this.user.images.length}` > 0"
                 />
+                <v-img
+                class="media-object"
+                width="150"
+                src="../assets/def_prof_pic.png"
+                v-else
+
+
+
+              ></v-img>
               </div>
             </v-col>
             <v-col cols="5">
@@ -61,8 +71,20 @@
                 class="media-object"
                 width="150"
                 :src="`${playlist.images[0].url}`"
-              ></v-img
-              ><v-spacer></v-spacer>
+                v-if="`${playlist.images.length}` > 0"
+              ></v-img>
+
+              <v-img
+                class="media-object"
+                width="150"
+                src="../assets/vinyl.jpg"
+                v-else
+
+
+
+              ></v-img>
+              
+              <v-spacer></v-spacer>
               {{ playlist.name }}
             </v-col>
           </v-row>
@@ -79,6 +101,8 @@ export default {
     user: null,
     playlists: null,
     loggedIn: false,
+    // hasProfImg: true,
+
   }),
   components: {},
   methods: {
@@ -98,6 +122,7 @@ export default {
       } else {
         console.log("Could not login, no access token");
       }
+      console.log(playlists)
     },
     loginToSpotify() {
       var stateKey = "spotify_auth_state";
@@ -124,7 +149,7 @@ export default {
       url += "&scope=" + encodeURIComponent(scope);
       url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
       url += "&state=" + encodeURIComponent(generatedString);
-
+      // console.log(playlists)
       window.location = url;
 
       this.getSpotifyInfo();
@@ -149,6 +174,20 @@ export default {
       }
       return hashParams;
     },
+
+    // checkForPicture(info){
+    // if(this.user.images[0].url != null){
+
+    // hasProfImg = true;
+      
+    // }
+    // else{
+    //   hasProfImg = false;
+    // }
+
+
+    // }
+
   },
   mounted() {
     this.getSpotifyInfo();
