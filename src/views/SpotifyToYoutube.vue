@@ -1,18 +1,15 @@
 <template>
   <div>
     <v-container>
-      <v-row v-if="!loggedIn" align="center"> 
-        <v-col cols="6" class="YorSbutton" @click="goBack">
-
-          <v-btn rounded color="grey"> Go Back </v-btn>
+      <v-row v-if="!loggedIn" align="center">
+        <v-col cols="6" class="YorSbutton">
+          <v-btn @click="goBack" rounded color="grey"> Go Back </v-btn>
         </v-col>
 
-          <!-- Login button, show if not logged in-->
-          <v-col cols="6" class="YorSbutton" @click="loginToSpotify">
-            <v-btn rounded color="green"> Login </v-btn>
-          </v-col>
-        
-
+        <!-- Login button, show if not logged in-->
+        <v-col cols="6" class="YorSbutton">
+          <v-btn @click="loginToSpotify" rounded color="green"> Login </v-btn>
+        </v-col>
       </v-row>
 
       <!-- Show this info if logged in (name, spotify info, and playlists)-->
@@ -86,11 +83,11 @@
                       v-if="hover"
                       class="
                         d-flex
-                        transition-fast-in-fast-out 
+                        transition-fast-in-fast-out
                         green
                         v-card--reveal
                         white--text
-                      " 
+                      "
                       style="height: 100%"
                     >
                       <v-btn
@@ -117,12 +114,16 @@
             </v-col>
           </v-row>
         </div>
+
+        <v-btn @click="loginToYoutube">Youtube Test</v-btn>
+
       </div>
     </v-container>
   </div>
 </template>
 
-<script src="https://accounts.google.com/js/api.js" async defer></script>
+
+<script src="https://apis.google.com/js/api.js"></script>
 <script>
 import spotifyApi from "../apis/spotify.api";
 export default {
@@ -133,11 +134,8 @@ export default {
   }),
   components: {},
   methods: {
-
-    goBack(){
-      this.$router.push('/')
-
-
+    goBack() {
+      this.$router.push("/");
     },
 
     async getSpotifyInfo() {
@@ -212,9 +210,25 @@ export default {
       }
       return hashParams;
     },
-    loginToYoutube() {
+    async loginToYoutube() {
+      google.accounts.id.initialize({
+        client_id:
+          "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
+      });
+      google.accounts.id.prompt();
+      console.log(google);
 
-    }
+      var url =
+        "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=25&mine=true&key=AIzaSyAH_Wf0fE_ka5Eqk1JbG5YGiV0xMnTV6l8";
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + access_token, // get access token somehow
+        },
+      });
+    },
   },
   mounted() {
     this.getSpotifyInfo();

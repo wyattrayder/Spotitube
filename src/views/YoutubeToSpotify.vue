@@ -3,12 +3,12 @@
     <v-container>
       <v-row align="center">
 
-        <v-col cols="4" class="YorSbutton" @click="goBack">
-          <v-btn rounded color="grey">Go Back</v-btn>
+        <v-col cols="4" class="YorSbutton" >
+          <v-btn @click="goBack" rounded color="grey">Go Back</v-btn>
         </v-col>
 
-        <v-col cols="4" class="YorSbutton" @click="getLink">
-          <v-btn v-if="!loggedIn" rounded color="red">Youtube Link</v-btn>
+        <v-col cols="4" class="YorSbutton">
+          <v-btn @click="getLink" v-if="!loggedIn" rounded color="red">Youtube Link</v-btn>
         </v-col>
 
         <v-col cols="4" class="YorSbutton"> 

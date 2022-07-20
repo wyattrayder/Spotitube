@@ -2,11 +2,11 @@
   <div>
     <v-container>
       <v-row align="center">
-        <v-col cols="6" class="YorSbutton" @click="goToSpotify">
-          <v-btn>Spotify -> Youtube</v-btn>
+        <v-col cols="6" class="YorSbutton">
+          <v-btn @click="goToSpotify">Spotify -> Youtube</v-btn>
         </v-col>
-        <v-col cols="6" class="YorSbutton" @click="goToYoutube">
-          <v-btn>Youtube -> Spotify</v-btn>
+        <v-col cols="6" class="YorSbutton">
+          <v-btn  @click="goToYoutube">Youtube -> Spotify</v-btn>
         </v-col>
       </v-row>
     </v-container>
