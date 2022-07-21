@@ -242,7 +242,7 @@ export default {
       console.log(client);
       console.log(a_token);
       var url =
-        "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=25&mine=true&key=AIzaSyAH_Wf0fE_ka5Eqk1JbG5YGiV0xMnTV6l8";
+        "https://youtube.googleapis.com/youtube/v3/playlists?key=AIzaSyCljyGykLH8i7zJsljdA4ycCHso4FCDdmQ";
       const response = await fetch(url, {
         method: "GET",
         mode: "cors",
