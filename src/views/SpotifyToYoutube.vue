@@ -115,8 +115,7 @@
           </v-row>
         </div>
 
-        <v-btn @click="loginToYoutube">Youtube Test</v-btn>
-
+        <v-btn @click="loginToYoutube()">Youtube Test</v-btn>
       </div>
     </v-container>
   </div>
@@ -131,6 +130,7 @@ export default {
     user: null,
     playlists: null,
     loggedIn: false,
+    token: "",
   }),
   components: {},
   methods: {
@@ -211,13 +211,36 @@ export default {
       return hashParams;
     },
     async loginToYoutube() {
-      google.accounts.id.initialize({
+      // google.accounts.id.initialize({
+      //   client_id:
+      //     "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
+      // });
+      // google.accounts.id.prompt();
+      // console.log(google);
+
+      var a_token = "";
+      const client = google.accounts.oauth2.initTokenClient({
         client_id:
           "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
+        scope: "https://www.googleapis.com/auth/youtube	",
+        ux_mode: "popup",
+        callback(tokenResponse) {
+          if (tokenResponse && !tokenResponse.error) {
+            localStorage.setItem(
+              "token",
+              JSON.parse(JSON.stringify(tokenResponse.access_token))
+            );
+            onSuccess(tokenResponse.access_token);
+            return tokenResponse;
+          }
+          onError(tokenResponse.error || "google authentication failed");
+        },
       });
-      google.accounts.id.prompt();
-      console.log(google);
 
+      client.requestAccessToken();
+
+      console.log(client);
+      console.log(a_token);
       var url =
         "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=25&mine=true&key=AIzaSyAH_Wf0fE_ka5Eqk1JbG5YGiV0xMnTV6l8";
       const response = await fetch(url, {
@@ -225,9 +248,11 @@ export default {
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token, // get access token somehow
+          Authorization: "Bearer " + localStorage.getItem("token"), // get access token somehow
         },
       });
+
+      console.log(response);
     },
   },
   mounted() {
