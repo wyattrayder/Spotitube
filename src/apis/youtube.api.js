@@ -18,8 +18,8 @@ const youtubeApi = {
                 "Content-Type": "application/json",
             },
         })
-        .then(res => res.json())
-        .then(data => console.log(data));
+            .then(res => res.json())
+            .then(data => console.log(data));
     },
     async getYoutubePlaylists(access_token) {
         var url = "https://www.googleapis.com/youtube/v3/playlists?"
@@ -37,10 +37,38 @@ const youtubeApi = {
                 Authorization: "Bearer " + access_token,
             }
         })
-        .then(res => res.json())
-        .then(data => console.log(data));
-    }
+            .then(res => res.json())
+            .then(data => console.log(data));
+    },
+    async createYoutubePlaylist(access_token, playlistTitle) {
+        var url = "https://www.googleapis.com/youtube/v3/playlists?"
+
+        await fetch(url + new URLSearchParams({
+            key: apiKey,
+            mine: 'true',
+            part: 'snippet,status',
+        }), {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + access_token,
+            },
+            data: {
+                "snippet": {
+                    "title": `${playlistTitle}`,
+                    "description": "Playlist created via Spotitube.",
+                    "tags": ["Spotitube Playlist"],
+                    "defaultLanguage": "en"
+                },
+                "status": { "privacyStatus": "private" }
+            }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data));
+    },
 
 
-} 
+
+}
 export default youtubeApi;

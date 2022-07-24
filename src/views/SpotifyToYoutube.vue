@@ -212,6 +212,8 @@ export default {
         youtubeApi.youtubeSearch(k);
       })
 
+      //youtubeApi.createYoutubePlaylist(access_token, playlist.name)
+
     },
     generateRandomString(length) {
       var text = "";
@@ -240,7 +242,7 @@ export default {
       const client = google.accounts.oauth2.initTokenClient({
         client_id:
           "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
-        scope: "https://www.googleapis.com/auth/youtube.readonly",
+        scope: "https://www.googleapis.com/auth/youtube.readonly \ https://www.googleapis.com/auth/youtube",
         ux_mode: "popup",
         callback(tokenResponse) {
           if (tokenResponse && !tokenResponse.error) {
