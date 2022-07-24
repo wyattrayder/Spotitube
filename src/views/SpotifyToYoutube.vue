@@ -124,6 +124,7 @@
 
 <script src="https://apis.google.com/js/api.js"></script>
 <script>
+import youtubeApi from '@/apis/youtube.api';
 import spotifyApi from "../apis/spotify.api";
 export default {
   data: () => ({
@@ -186,9 +187,31 @@ export default {
 
       this.getSpotifyInfo();
     },
-    convertPlaylist(playlist) {
-      console.log("Clicked Playlist: ");
-      console.log(playlist);
+    async convertPlaylist(playlist) {
+
+      //store this access token in local storage like we did for youtube?
+      var params = this.getHashParams();
+      var access_token = params.access_token;
+
+      // fetches tracks object from spotify api.  
+      // now we can go through and gather track name and artist
+      var spotifyTracks = await spotifyApi.getPlaylistTracks(playlist.id, access_token);
+
+      var youtubeKeywords = [];
+
+      // scrape the playlistTracks response for track name and artist; add them to a keyword array
+      spotifyTracks.items.forEach((t) => {
+        var artist = t.track.artists[0].name;
+        var trackName = t.track.name;
+        youtubeKeywords.push(artist + " " + trackName);
+      });
+
+      // performs a youtube search for each track keyword (artist & track name)
+      // shown in the console.  Now we need to create a playlist!!
+      youtubeKeywords.forEach((k) => {
+        youtubeApi.youtubeSearch(k);
+      })
+
     },
     generateRandomString(length) {
       var text = "";
@@ -211,48 +234,38 @@ export default {
       return hashParams;
     },
     async loginToYoutube() {
-      // google.accounts.id.initialize({
-      //   client_id:
-      //     "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
-      // });
-      // google.accounts.id.prompt();
-      // console.log(google);
 
-      var a_token = "";
+      //this initializes the "Login to Google" page and saves the access token in localstorage
+      //we may want to find a way to encode the access token so people cant just see it in the console
       const client = google.accounts.oauth2.initTokenClient({
         client_id:
           "556153415784-86m5gsd0s0dvj4gbkop03sqf3d0lpb7i.apps.googleusercontent.com",
-        scope: "https://www.googleapis.com/auth/youtube	",
+        scope: "https://www.googleapis.com/auth/youtube.readonly",
         ux_mode: "popup",
         callback(tokenResponse) {
           if (tokenResponse && !tokenResponse.error) {
-            localStorage.setItem(
+            localStorage.setItem( // this saves the access token in local storage
               "token",
               JSON.parse(JSON.stringify(tokenResponse.access_token))
             );
             onSuccess(tokenResponse.access_token);
-            return tokenResponse;
           }
           onError(tokenResponse.error || "google authentication failed");
         },
       });
 
+      //request the access token
       client.requestAccessToken();
 
-      console.log(client);
-      console.log(a_token);
-      var url =
-        "https://youtube.googleapis.com/youtube/v3/playlists?key=AIzaSyCljyGykLH8i7zJsljdA4ycCHso4FCDdmQ";
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"), // get access token somehow
-        },
-      });
+      
+      var token = localStorage.getItem("token");
 
-      console.log(response);
+      // this gets all of the users current playlists on their youtube account
+      // we really don't need this on the spotify page, so this will be used in the youtube page
+      var youtubePlaylistResponse = youtubeApi.getYoutubePlaylists(token);
+
+      console.log(youtubePlaylistResponse);
+      console.log(client);     
     },
   },
   mounted() {
