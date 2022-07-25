@@ -189,7 +189,9 @@ export default {
     },
     async convertPlaylist(playlist) {
 
-      //store this access token in local storage like we did for youtube?
+      // This method is called when the user clicks on the "convert" button on a playlist
+
+      //should we store this access token in local storage like we did for youtube?
       var params = this.getHashParams();
       var access_token = params.access_token;
 
@@ -208,9 +210,11 @@ export default {
 
       // performs a youtube search for each track keyword (artist & track name)
       // shown in the console.  Now we need to create a playlist!!
-      youtubeKeywords.forEach((k) => {
-        youtubeApi.youtubeSearch(k);
-      })
+      //COMMENTED BELOW OUT BECAUSE IT WAS USING SO MUCH OF OUR API QUOTA
+
+      // youtubeKeywords.forEach((k) => {
+      //   youtubeApi.youtubeSearch(k);
+      // })
 
       //youtubeApi.createYoutubePlaylist(access_token, playlist.name)
 
@@ -258,16 +262,16 @@ export default {
 
       //request the access token
       client.requestAccessToken();
+      console.log(client);   
 
       
-      var token = localStorage.getItem("token");
+      //var token = localStorage.getItem("token");
 
       // this gets all of the users current playlists on their youtube account
       // we really don't need this on the spotify page, so this will be used in the youtube page
-      var youtubePlaylistResponse = youtubeApi.getYoutubePlaylists(token);
 
-      console.log(youtubePlaylistResponse);
-      console.log(client);     
+      //var youtubePlaylistResponse = youtubeApi.getYoutubePlaylists(token);
+      //console.log(youtubePlaylistResponse);  
     },
   },
   mounted() {
