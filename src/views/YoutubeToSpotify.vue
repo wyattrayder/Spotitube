@@ -215,44 +215,26 @@ async loginToYoutube() {
         this.getSpotifyInfo();
     },
     
-    // end of methods
+
   
+
+
+
+},     // end of methods
+
 mounted(){
-this.getSpotifyInfo();
+  this.getSpotifyInfo();
 
 
-}
+},
 
-
-}}; // end of export default
+}; // end of export default
 // AIzaSyCljyGykLH8i7zJsljdA4ycCHso4FCDdmQ - API key
 // 352942451792-fvfoas989dlp93hd2jm3mim9689egfgs.apps.googleusercontent.com -> my OAuth
 // I deleted my OAuth for now
 // My channel ID is UCYauaCT2lnnv4D8WMNi5zig if you want to test using that
-// console.log('test');
 
-
-
-
-    
 </script>
-
-<!-- <script>
-// let gapi = window.gapi;
-// gapi.load('auth2', initSigninV2);
-
-// function initSigninV2() {
-//     gapi.auth2.init({
-//         client_id: '352942451792-fvfoas989dlp93hd2jm3mim9689egfgs.apps.googleusercontent.com'
-//     }).then(function (authInstance) {
-//         // now auth2 is fully initialized
-//     });
-// }
-
-
-</script> -->
-
-<!-- <script src="https://apis.google.com/js/api.js"></script> -->
 
 
 <style scoped>
